@@ -21,3 +21,14 @@ def music_list(request):
          return Response(serializer.data, status=status.HTTP_201_CREATED)
       else:
           Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def music_detail(request, pk):
+   try:
+    music=Music.objects.get(pk=pk)
+    serializer=Musicserializer(music)
+    return Response(serializer.data)
+    
+   except Music.DoesNotExist:
+      return Response(status=status.HTTP_404_NOT_FOUND)
+
